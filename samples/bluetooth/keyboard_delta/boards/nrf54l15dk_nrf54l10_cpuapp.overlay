@@ -1,0 +1,68 @@
+/*
+ * Copyright (c) 2025 Nordic Semiconductor ASA
+ *
+ * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+ */
+
+/* Application does not use cpuflpr core. Assign whole RRAM to cpuapp. */
+&cpuapp_rram {
+	reg = < 0x0 DT_SIZE_K(1012) >;
+};
+
+/ {
+	/* Reserve 4KB ram for retaintion */
+	cpuapp_sram@2002f000 {
+		compatible = "zephyr,memory-region", "mmio-sram";
+		reg = <0x2002f000 DT_SIZE_K(4)>;
+		zephyr,memory-region = "RetainedMem";
+		status = "okay";
+
+		retainedmem0: retainedmem {
+			compatible = "zephyr,retained-ram";
+			status = "okay";
+		};
+	};
+
+	aliases {
+		retainedmemdevice = &retainedmem0;
+	};
+
+};
+
+&cpuapp_sram {
+	/* Shrink SRAM size to avoid overlap with retained memory region */
+	reg = <0x20000000 DT_SIZE_K(188)>;
+	ranges = <0x0 0x20000000 0x2f000>;
+};
+
+/* Remove existing partitions */
+/delete-node/ &slot0_partition;
+/delete-node/ &slot1_partition;
+/delete-node/ &storage_partition;
+/delete-node/ &boot_partition;
+/delete-node/ &slot0_ns_partition;
+/delete-node/ &slot1_ns_partition;
+
+&cpuapp_rram {
+	partitions {
+		compatible = "fixed-partitions";
+		#address-cells = <1>;
+		#size-cells = <1>;
+		boot_partition: partition@0 {
+			label = "mcuboot";
+			reg = <0x0 DT_SIZE_K(64)>;
+		};
+		slot0_partition: partition@10000 {
+			label = "image-0";
+			reg = <0x10000 DT_SIZE_K(456)>;
+		};
+		slot1_partition: partition@82000 {
+			label = "image-1";
+			reg = <0x82000 DT_SIZE_K(456)>;
+		};
+		storage_partition: partition@f4000 {
+			label = "storage";
+			reg = <0xf4000 DT_SIZE_K(36)>;
+		};
+	};
+};
