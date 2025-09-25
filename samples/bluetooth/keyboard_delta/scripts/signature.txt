@@ -1,0 +1,1 @@
+"python  C:/ncs/v2.9.1/bootloader/mcuboot/scripts/imgtool.py sign --key C:/ncs/v2.9.1/bootloader/mcuboot/root-ed25519.pem --pure --header-size 0x800 --align 16 --version 0.0.0+0 --pad-header --slot-size 0x100000"
