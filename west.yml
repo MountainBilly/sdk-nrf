@@ -39,6 +39,9 @@ manifest:
       url-base: https://github.com/boschsensortec
     - name: eembc
       url-base: https://github.com/eembc
+    - name: billy
+      url-base: https://github.com/MountainBilly
+
 
   # If not otherwise specified, the projects below should be obtained
   # from the ncs remote.
@@ -130,8 +133,9 @@ manifest:
           compare-by-default: true
     - name: mcuboot
       repo-path: sdk-mcuboot
-      revision: v2.1.0-ncs3
+      revision: Wacom
       path: bootloader/mcuboot
+      remote: billy
     - name: qcbor
       url: https://github.com/laurencelundblade/QCBOR
       revision: 751d36583a9ce1a640900c57e13c9b6b8f3a2ba2
