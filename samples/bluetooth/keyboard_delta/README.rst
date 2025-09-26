@@ -1,6 +1,6 @@
 .. _peripheral_hids_keyboard with Delta DFU:
 
-Bluetooth: Peripheral HIDS keyboard
+Bluetooth: Peripheral HIDS keyboard With Delta DFU
 ###################################
 
 .. contents::
